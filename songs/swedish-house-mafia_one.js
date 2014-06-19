@@ -19,7 +19,7 @@ var noteFreq = 1 / 3;
 // duration of each note in seconds
 var noteDur = noteFreq * 2;
 // dampening factor
-var dampenSpeed = 8;
+var dampenSpeed = 15;
 // the octave for a normal note
 var baseOctave = 3;
 
