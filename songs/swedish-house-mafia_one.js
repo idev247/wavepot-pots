@@ -175,19 +175,27 @@ function note(n, t) {
 
 // time
 function dsp(t) {
+  function arp(measure, x, y, z){
+  var ts = t / 2 % measure;
+    return Math.sin(x * (Math.exp(-ts * y))) * Math.exp(-ts * z);
+  }
+  
   var total = notes.length * noteFreq;
   var tt = t % total;
   var i = Math.floor(tt / total * notes.length);
   var s = 0;
+  var kick = arp(noteFreq, 51, 45, 3);
+  var kickvol = 0;
   
   if (t < 8) {
-        return 0.1 * Math.tan(8 * Math.PI * t * t);
+        return 1 * Math.tan(8 * Math.PI * t * t);
   } else if (t < 10) {
-        return 0.1 * Math.tan(8 * Math.PI * (t*16.0));
+        return 1 * Math.tan(8 * Math.PI * (t*16.0));
   } else {
     for (var m = 0; m < noteDur && i >= 0; m += noteFreq) {
       s += note(notes[i--], t % noteFreq + m);
     }
-    return s;
+    return s + kick * kickvol;
   }
+
 }
