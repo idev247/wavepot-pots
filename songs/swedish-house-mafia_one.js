@@ -1,10 +1,13 @@
+// Swedish House Mafia - One
+// https://www.youtube.com/watch?v=PkQ5rEJaTmk
+
+// Warning: This is a alpha version. There's composition at all.
+//          Also the initial part of the song is uber loud.
+
 // Script altered from:
 // https://dl.dropboxusercontent.com/u/43006973/StillAlive.js
 // Originally found in this comment:
 // http://www.reddit.com/r/programming/comments/28gnb9/wavepot_live_coding_music_in_the_browser/cib38zx
-
-// Swedish House Mafia - One
-// https://www.youtube.com/watch?v=PkQ5rEJaTmk
 
 // amplitude of the notes
 var amp = 1;
@@ -41,7 +44,7 @@ var noteFreqs = {
 
 // notes to play, here Sill alive
 var notes = [
-  "A", "G", "F", "E", "D", "D", "D", "D", "D", "D",
+  " ", "A", "G", "F", "E", "D", "D", "D", "D", "D", "D",
   "D", "A", "G", "F", "E", "D", "D", "D", "D", "D",
   "D", "D", "A", "G", "F", "E", "F", "F", "F", "F",
   "F", "F", "F", "A", "G", "F", "E", "G", "G", "G",
@@ -176,8 +179,15 @@ function dsp(t) {
   var tt = t % total;
   var i = Math.floor(tt / total * notes.length);
   var s = 0;
-  for (var m = 0; m < noteDur && i >= 0; m += noteFreq) {
-    s += note(notes[i--], t % noteFreq + m);
+  
+  if (t < 8) {
+        return 0.1 * Math.tan(8 * Math.PI * t * t);
+  } else if (t < 10) {
+        return 0.1 * Math.tan(8 * Math.PI * (t*16.0));
+  } else {
+    for (var m = 0; m < noteDur && i >= 0; m += noteFreq) {
+      s += note(notes[i--], t % noteFreq + m);
+    }
+    return s;
   }
-  return s;
 }
